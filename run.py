@@ -11,6 +11,7 @@ def create_app():
     
 
     return app
+#teste
 
 app = create_app()
 
