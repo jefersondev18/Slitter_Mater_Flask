@@ -1,0 +1,278 @@
+{% extends "home.html" %}
+
+{% block title %}Plano de Corte — Otimizador de Matrizes{% endblock %}
+{% block page_title %}Plano de Corte{% endblock %}
+{% block page_subtitle %}— Otimizador de Matrizes{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/plano_corte.css') }}">
+{% endblock %}
+
+{% block topbar_actions %}
+  <button class="btn btn-ghost" id="btnAtualizar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="23 4 23 10 17 10"/>
+      <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+    </svg>
+    Atualizar
+  </button>
+  <button class="btn-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>
+    </svg>
+  </button>
+{% endblock %}
+
+{% block content %}
+<div class="pc-layout">
+
+  <!-- =====================================================
+       PARÂMETROS
+       ===================================================== -->
+  <section class="pc-params">
+
+    <div class="pc-section-header">
+      <h2 class="pc-section-title">Parâmetros do Plano de Corte</h2>
+
+      <div class="pc-status-badge" id="statusBadge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Válidas
+        <span class="pc-badge-count" id="comboCount">0</span>
+        Combinações encontradas
+      </div>
+    </div>
+
+    <div class="pc-params-grid">
+
+      <!-- Espessura -->
+      <div class="pc-field">
+        <label class="pc-label" for="espessura">Espessura</label>
+        <div class="pc-select-wrap">
+          <select class="pc-select" id="espessura" name="espessura">
+            <option value="0.5">0,5 mm</option>
+            <option value="1.0" selected>1,0 mm</option>
+            <option value="1.5">1,5 mm</option>
+            <option value="2.0">2,0 mm</option>
+            <option value="2.5">2,5 mm</option>
+            <option value="3.0">3,0 mm</option>
+          </select>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Tipo de Material -->
+      <div class="pc-field">
+        <label class="pc-label" for="tipoMaterial">Tipo de Material</label>
+        <div class="pc-select-wrap">
+          <select class="pc-select" id="tipoMaterial" name="tipoMaterial">
+            <option selected>Aço Galvanizado</option>
+            <option>Aço Carbono</option>
+            <option>Alumínio</option>
+            <option>Inox 304</option>
+            <option>Inox 316</option>
+          </select>
+          <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Matriz Âncora -->
+      <div class="pc-field">
+        <label class="pc-label" for="matrizAncora">Matriz Âncora</label>
+        <div class="pc-compound">
+          <div class="pc-select-wrap">
+            <select class="pc-select" id="matrizAncora" name="matrizAncora">
+              <option selected>CF-01</option>
+              <option>CF-02</option>
+              <option>CF-06</option>
+              <option>CF-09</option>
+              <option>CF-10</option>
+              <option>CF-16</option>
+            </select>
+            <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+
+          <span class="pc-tag" id="matrizTagMm">88,0 mm</span>
+
+          <div class="pc-select-wrap">
+            <select class="pc-select" id="modoMatriz" name="modoMatriz">
+              <option selected>Desenvolvimento</option>
+              <option>Produção</option>
+            </select>
+            <svg class="pc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Largura da Bobina -->
+      <div class="pc-field">
+        <label class="pc-label">Largura da Bobina</label>
+        <div class="pc-radio-group">
+          <label class="pc-radio">
+            <input type="radio" name="larguraBobina" value="1200">
+            <span class="pc-radio-dot"></span>
+            1200 mm
+          </label>
+          <label class="pc-radio">
+            <input type="radio" name="larguraBobina" value="1000" checked>
+            <span class="pc-radio-dot"></span>
+            1000 mm
+          </label>
+          <label class="pc-radio">
+            <input type="radio" name="larguraBobina" value="1500">
+            <span class="pc-radio-dot"></span>
+            1500 mm
+          </label>
+          <label class="pc-radio">
+            <input type="radio" name="larguraBobina" value="1800">
+            <span class="pc-radio-dot"></span>
+            1800 mm
+          </label>
+        </div>
+      </div>
+
+      <!-- Limite Máximo de Cortes -->
+      <div class="pc-field">
+        <label class="pc-label" for="limiteCortes">Limite Máximo de Cortes</label>
+        <input class="pc-input" type="number" id="limiteCortes" name="limiteCortes" placeholder="Opcional" min="1">
+      </div>
+
+      <!-- Bobina Usada -->
+      <div class="pc-field">
+        <label class="pc-label">Bobina Usada</label>
+        <div class="pc-bobina-info">
+          <span class="pc-bobina-val" id="bobinaVal">1200 mm</span>
+          <span class="pc-bobina-dot"></span>
+          <span class="pc-bobina-range" id="bobinaRange">0,67% – 1,68% &nbsp;(8,0 mm – 20,2 mm)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pc-action-row">
+      <button class="btn btn-primary" id="btnEncontrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+        </svg>
+        Encontrar Combinações
+      </button>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       TABELA DE RESULTADOS
+       ===================================================== -->
+  <section class="pc-results">
+
+    <div class="pc-table-head">
+      <h3 class="pc-table-title">Combinações Válidas</h3>
+      <div class="pc-table-controls">
+        <button class="btn-icon" id="btnFiltrar" title="Filtrar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+        </button>
+        <button class="btn-icon" title="Colunas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="pc-table-wrap">
+      <table class="pc-table">
+        <thead>
+          <tr>
+            <th class="col-idx">#</th>
+            <th>Combinação</th>
+            <th class="col-center">N Âncora</th>
+            <th class="col-right col-sortable" data-col="total">
+              Total <span class="sort-caret">↕</span>
+            </th>
+            <th class="col-right col-sortable col-sort-active" data-col="largura">
+              Largura Utilizada <span class="sort-caret">↕</span>
+            </th>
+            <th class="col-right">Perda (mm)</th>
+            <th class="col-right">Perda (%)</th>
+            <th class="col-right">Qtd. KG</th>
+            <th class="col-center">Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- linha placeholder inicial -->
+          <tr class="pc-empty-row">
+            <td colspan="9">
+              Clique em <strong>Encontrar Combinações</strong> para iniciar o cálculo.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginação -->
+    <div class="pc-pagination" id="pagination">
+      <span class="pc-page-info" id="pageInfo">Nenhuma combinação carregada</span>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       BARRA DE RESUMO
+       ===================================================== -->
+  <footer class="pc-summary">
+
+    <div class="pc-sum-item">
+      <svg class="pc-sum-icon green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      <div>
+        <div class="pc-sum-label">Combinações Encontradas</div>
+        <div class="pc-sum-value green" id="totalCombos">0</div>
+      </div>
+    </div>
+
+    <div class="pc-sum-divider"></div>
+
+    <div class="pc-sum-item">
+      <svg class="pc-sum-icon amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <div>
+        <div class="pc-sum-label">Perda (mm)</div>
+        <div class="pc-sum-sublabel">Máx. <span id="perdaMax">—</span></div>
+        <div class="pc-sum-value" id="perdaMin">—</div>
+      </div>
+    </div>
+
+    <div class="pc-sum-divider"></div>
+
+    <div class="pc-sum-kg" id="totalKg">— kg</div>
+
+    <button class="btn btn-primary pc-btn-export" id="btnExportar">
+      Exportar Resultado
+    </button>
+
+  </footer>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/plano_corte.js') }}"></script>
+{% endblock %}
