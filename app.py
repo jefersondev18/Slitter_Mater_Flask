@@ -19,5 +19,10 @@ def plano_corte():
 def necessidade_prod():
     return render_template("necessidade_prod.html")
 
+@app.route("/config")
+def config():
+    return render_template("config.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

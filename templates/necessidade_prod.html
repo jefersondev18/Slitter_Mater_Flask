@@ -1,0 +1,128 @@
+{% extends "home.html" %}
+
+{% block title %}Necessidade de Produção - Slitter{% endblock %}
+
+{% block content %}
+
+<div class="slitter-container">
+
+    <!-- HEADER -->
+    <div class="slitter-header">
+        <div>
+            <h1>Bem-vindo de volta!</h1>
+            <p>Painel geral da necessidade de produção</p>
+        </div>
+
+        <button class="btn-refresh">
+            ⟳ Atualizar
+        </button>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards-grid">
+        <div class="card blue">
+            <div class="card-icon">📄</div>
+            <div class="card-info">
+                <span>Ordens de Produção</span>
+                <strong>258</strong>
+            </div>
+        </div>
+
+        <div class="card green">
+            <div class="card-icon">✔</div>
+            <div class="card-info">
+                <span>Ordens Atendidas</span>
+                <strong>180</strong>
+            </div>
+        </div>
+
+        <div class="card red">
+            <div class="card-icon">!</div>
+            <div class="card-info">
+                <span>Ordens Não Atendidas</span>
+                <strong>78</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- AÇÕES -->
+    <div class="actions-bar">
+        <div class="left-actions">
+            <button class="btn-primary">📂 Carregar Arquivos</button>
+
+            <div class="dropdown">
+                <button class="btn-secondary">📊 Necessidade de Produção ▾</button>
+            </div>
+        </div>
+
+        <button class="btn-outline">⬇ Exportar Resultado</button>
+    </div>
+
+    <!-- TABELA -->
+    <div class="table-box">
+        <h2>Resumo das Necessidades de Produção</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ordem</th>
+                        <th>Material</th>
+                        <th>Texto Breve Material</th>
+                        <th>Esp. (mm)</th>
+                        <th>Matriz de Conform.</th>
+                        <th>Data Sequenc.</th>
+                        <th>Qtd. Necessária</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>100234</td>
+                        <td>ABC123</td>
+                        <td>Aço Galvanizado</td>
+                        <td>0,8</td>
+                        <td>CF-01</td>
+                        <td>15/02/2022</td>
+                        <td>270</td>
+                        <td><span class="status ok">Atende</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>100234</td>
+                        <td>ABC123</td>
+                        <td>Aço Galvanizado</td>
+                        <td>0,8</td>
+                        <td>CF-01</td>
+                        <td>14/02/2022</td>
+                        <td>900</td>
+                        <td><span class="status error">-300</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>100234</td>
+                        <td>ABC123</td>
+                        <td>Aço Galvanizado</td>
+                        <td>0,8</td>
+                        <td>CF-01</td>
+                        <td>14/02/2022</td>
+                        <td>1150</td>
+                        <td><span class="status ok">Atende</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-footer">
+            <span>Total de Limas: 258</span>
+            <a href="#">Ver Todas →</a>
+        </div>
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/necessidade_prod.css') }}">
+<script src="{{ url_for('static', filename='js/necessidade_prod.js') }}"></script>
+
+{% endblock %}

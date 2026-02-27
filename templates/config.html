@@ -1,0 +1,60 @@
+{% extends "home.html" %}
+{% block title %}Importar Dados - Slitter{% endblock %}
+
+{% block content %}
+
+<div class="import-page">
+
+    <header class="import-header">
+        <h1>Importar Dados</h1>
+        <p>Carregue um arquivo Excel (.xlsx) para atualizar o sistema</p>
+    </header>
+
+    <section class="upload-section">
+        <div class="upload-box">
+            <div class="upload-icon"></div>
+            
+            <h2>Selecione o arquivo Excel</h2>
+            <p class="upload-hint">
+                Arquivo .xlsx • Máximo 50 MB<br>
+                Deve conter as colunas esperadas pelo sistema
+            </p>
+
+            <form id="importForm" method="post" enctype="multipart/form-data">
+                <div class="file-input-wrapper">
+                    <input 
+                        type="file" 
+                        id="excelFile" 
+                        name="excel_file" 
+                        accept=".xlsx, .xls" 
+                        class="file-input" 
+                        required
+                    >
+                    <label for="excelFile" class="file-label">
+                        <span class="btn btn-primary">Escolher arquivo</span>
+                        <span id="fileName" class="file-name-display">Nenhum arquivo selecionado</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-submit" id="btnImportar" disabled>
+                    Importar Dados Agora
+                </button>
+            </form>
+
+            <div class="status-area" id="statusArea">
+                <p id="statusMessage">Aguardando arquivo...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mensagens de erro/sucesso (opcional, controlado via JS ou flash) -->
+    <div class="extra-info">
+        <small>Dica: Faça backup antes de importar novos dados.</small>
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/config.css') }}">
+<script src="{{ url_for('static', filename='js/config.js') }}"></script>
+
+{% endblock %}

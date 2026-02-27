@@ -1,0 +1,164 @@
+/* IMPORT PAGE - SLITTER
+   Layout focado em upload de Excel
+*/
+
+:root {
+    --bg: #0f1117;
+    --surface: #161b22;
+    --surface-hover: #1f2937;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --success: #10b981;
+    --danger: #ef4444;
+    --border: #334155;
+    --radius: 12px;
+}
+
+.import-page {
+    max-width: 680px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    color: var(--text);
+}
+
+.import-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.import-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.import-header p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+/* Área de upload */
+.upload-section {
+    background: var(--surface);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: border-color 0.25s;
+}
+
+.upload-section:hover,
+.upload-section.dragover {
+    border-color: var(--primary);
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.upload-icon {
+    font-size: 4.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+.upload-box h2 {
+    margin: 0 0 1rem;
+    font-size: 1.4rem;
+}
+
+.upload-hint {
+    color: var(--text-muted);
+    margin: 0 0 2rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Input de arquivo estilizado */
+.file-input-wrapper {
+    position: relative;
+    margin-bottom: 1.8rem;
+}
+
+.file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.9rem 1.8rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.file-name-display {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 100%;
+    word-break: break-all;
+}
+
+/* Botão de submit */
+.btn-submit {
+    background: var(--success);
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    width: 100%;
+    max-width: 360px;
+    margin: 1rem auto 0;
+    display: block;
+}
+
+.btn-submit:disabled {
+    background: #4b5563;
+    cursor: not-allowed;
+}
+
+/* Status */
+.status-area {
+    margin-top: 2rem;
+    min-height: 80px;
+}
+
+#statusMessage {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--text-muted);
+}
+
+/* Extra */
+.extra-info {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Responsividade */
+@media (max-width: 500px) {
+    .upload-section {
+        padding: 2.5rem 1.5rem;
+    }
+}
